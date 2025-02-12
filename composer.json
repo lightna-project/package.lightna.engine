@@ -1,9 +1,13 @@
 {
-  "name": "lightna/engine",
-  "description": "test",
-  "type": "library",
-  "license": "MIT",
-  "require": {
-    "php": "^8.1"
-  }
+    "name": "lightna/lightna.engine",
+    "description": "Lightna Engine module",
+    "type": "library",
+    "license": "MIT",
+    "version": "1.0.0",
+    "require": {
+        "php": "^8.1",
+        "ext-yaml": "*",
+        "ext-pdo": "*",
+        "laminas/laminas-db": "^2.20"
+    }
 }

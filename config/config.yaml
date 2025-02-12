@@ -1,0 +1,64 @@
+fpc_compatible: false
+maintenance:
+  enabled: false
+  # Directory with custom maintenance pages
+  dir: maintenance
+  # Environment variable name which values will be used as maintenance page name
+  vary_name: null
+  bypass:
+    cookie:
+      name:
+      value:
+# Path to the public folder accessible from Web where static assets will be placed
+asset_dir: null
+# List of Key-Value storages
+storage:
+  opcache:
+    adapter: Lightna\Engine\App\Storage\Opcache
+    options:
+      ini:
+        validate_timestamps: 1
+        revalidate_freq: 15
+  database:
+    adapter: Lightna\Engine\App\Storage\Database
+    options:
+      host: localhost
+      port: 3306
+      serializer: igbinary
+      dbname: ""
+router:
+  # List of router custom actions (name: class)
+  action:
+    page: Lightna\Engine\App\Router\Action\Page
+    block: Lightna\Engine\App\Router\Action\Block
+  routes:
+    lightna/block: block
+  bypass:
+    rules:
+      # Regular expressions for URL path, URL path excludes "/" at the beginning
+      # Expression is performed after prepending "^" to avoid parsing a whole URL path
+      url_starts_with: [ ]
+      # If no route in Lightna you have 2 options:
+      #   "404" - render 404 page by Lightna
+      #   "bypass" - pass request to the app
+      no_route: 404
+    # Project's index.php to handle bypass
+    file: null
+    cookie:
+      name: null
+      value: null
+entity:
+  state:
+    entity: Lightna\Engine\App\Entity\State
+    versioned: false
+  route:
+    entity: Lightna\Engine\App\Entity\Route
+  entity_route:
+    entity: Lightna\Engine\App\Entity\EntityRoute
+  config:
+  page:
+    layout: page
+  no-route:
+    layout: no-route
+default:
+  storage: opcache

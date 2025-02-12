@@ -1,0 +1,34 @@
+#!/usr/bin/env php
+<?php
+
+declare(strict_types=1);
+
+use Lightna\Engine\App\Cli;
+use Lightna\Engine\App\UserException;
+
+require __DIR__ . '/App/lib/cli.php';
+
+$command = $argv[1] ?? '';
+
+if (in_array($command, ['?', 'help', '', '-h', '--help'])) {
+    cli_help();
+    exit;
+}
+
+if (str_starts_with($command, 'build.')) {
+    cli_init_compiler_mode();
+}
+
+if (in_array($command, ['build.compile', 'build.apply', 'build.validate'])) {
+    cli_run_compiler($command);
+    exit;
+}
+
+require_once __DIR__ . '/App/boot.php';
+
+try {
+    getobj(Cli::class)->run($command);
+} catch (UserException $e) {
+    echo cli_error($e->getMessage()) . "\n";
+    exit(1);
+}
