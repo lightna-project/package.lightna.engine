@@ -10,7 +10,7 @@ use Laminas\Db\Sql\Select;
 use Laminas\Db\Sql\Update;
 use Lightna\Engine\App\ObjectA;
 use Lightna\Engine\App\Project\Database;
-use Lightna\Engine\App\Update\Schema\Index\Queue as Schema;
+use Lightna\Engine\App\Schema\Index\Queue as Schema;
 
 class Queue extends ObjectA
 {

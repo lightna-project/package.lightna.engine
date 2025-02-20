@@ -9,7 +9,7 @@ use Laminas\Db\Sql\Select;
 use Laminas\Db\Sql\Update;
 use Lightna\Engine\App\ObjectA;
 use Lightna\Engine\App\Project\Database;
-use Lightna\Engine\App\Update\Schema\Index\Changelog as Schema;
+use Lightna\Engine\App\Schema\Index\Changelog as Schema;
 
 class Changelog extends ObjectA
 {
