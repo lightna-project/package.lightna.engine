@@ -119,6 +119,10 @@ class Changelog extends ObjectA
 
     public function reset(): void
     {
+        if (!$this->db->isUsed()) {
+            return;
+        }
+
         $this->db->query('truncate table ' . $this->db->quoteIdentifier(Schema::TABLE_NAME));
     }
 
