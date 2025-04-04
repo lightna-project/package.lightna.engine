@@ -21,6 +21,8 @@ class Page extends ObjectA
     protected array $entities;
     /** @AppConfig(page_cache) */
     protected array $pageCacheConfig;
+    /** @AppConfig(bfcache) */
+    protected array $bfCacheConfig;
 
     protected function init(array $data = []): void
     {
@@ -52,15 +54,44 @@ class Page extends ObjectA
 
     protected function addCacheControlHeader(): void
     {
-        if (!$this->pageCacheConfig['type']) {
-            return;
-        }
-
         $this->response
             ->setHeader(
                 'Cache-Control',
-                'max-age=0, no-cache, no-store, must-revalidate, ' . $this->context->visibility,
+                implode(', ', $this->getCacheControlValues())
             )
             ->sendHeaders();
+    }
+
+    protected function getCacheControlValues(): array
+    {
+        return merge($this->getPageCacheValues(), $this->getBfCacheValues());
+    }
+
+    protected function getPageCacheValues(): array
+    {
+        if ($this->isPageCacheAllowed()) {
+            $values = ['public'];
+            if ($maxAge = ($this->pageCacheConfig['max_age'] ?? null)) {
+                $values[] = 's-maxage=' . $maxAge;
+            }
+        } else {
+            $values = ['private'];
+        }
+
+        return $values;
+    }
+
+    protected function isPageCacheAllowed(): bool
+    {
+        return $this->pageCacheConfig['type'] && $this->context->visibility === 'public';
+    }
+
+    protected function getBfCacheValues(): array
+    {
+        if ($this->bfCacheConfig['enabled']) {
+            return [];
+        } else {
+            return ['no-store'];
+        }
     }
 }
